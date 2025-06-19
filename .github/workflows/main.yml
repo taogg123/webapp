@@ -9,6 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     environment: prd
     steps:
+      - name: 配置docker insecure registry
+        run: | 
+          # 创建 Docker 配置目录
+          mkdir -p /etc/docker
+          # 配置不安全的私有注册表
+          echo '{"insecure-registries":["${{ secrets.MY_HOST }}:5000"]}' | sudo tee /etc/docker/daemon.json
+          # 重启 Docker 服务
+          sudo systemctl restart docker
+      - name: Verify Docker configuration
+        run: |
+          # 检查 Docker 信息
+          docker info
+          # 查看 daemon.json 配置
+          cat /etc/docker/daemon.json
       - name: 检出代码
         uses: actions/checkout@v3
       - name: 配置buildx
