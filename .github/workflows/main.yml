@@ -29,23 +29,16 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with: 
           install: true
+      - name: 登陆到私人仓库
+        run: |
+          docker login ${{ secrets.MY_HOST }}:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
       - name: 构建Docker镜像
         run:  |
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
-            -t my-web-app .
-      - name: 列出所有镜像
-        run: | 
-          docker images
-      - name: 登陆到私人仓库
-        run: |
-          docker login ${{ secrets.MY_HOST }}:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
-      - name: 给镜像打标签
-        run: |
-          docker tag my-web-app ${{ secrets.MY_HOST }}:5000/my-web-app:latest
-      - name: 上传到私人仓库
-        run: |
-          docker push ${{ secrets.MY_HOST }}:5000/my-web-app:latest
+            --tag ${{ secrets.MY_HOST }}:5000/my-web-app:latest \
+            --push \ #推送仓库
+            .
       - name: 查看
         run: |
           tree .
