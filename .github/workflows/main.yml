@@ -36,7 +36,7 @@ jobs:
             -t my-web-app .
       - name: 列出所有镜像
         run: | 
-          docker ps -a
+          docker images
       - name: 登陆到私人仓库
         run: |
           docker login ${{ secrets.MY_HOST }}:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
