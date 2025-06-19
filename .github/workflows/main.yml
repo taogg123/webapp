@@ -32,6 +32,12 @@ jobs:
       - name: 登陆到私人仓库
         run: |
           docker login ${{ secrets.MY_HOST }}:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
+      - name: Verify Docker configuration
+        run: |
+          # 检查 Docker 信息
+          docker info
+          # 查看 daemon.json 配置
+          cat /etc/docker/daemon.json
       - name: 构建Docker镜像
         run:  |
           docker buildx build \
