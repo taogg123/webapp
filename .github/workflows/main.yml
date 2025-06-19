@@ -19,19 +19,15 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             -t my-web-app .
-      - name: 构建临时容器
-        id: create_container
+      - name: 登陆到私人仓库
         run: |
-          CONTAINER_ID=$(docker create my-web-app)
-          echo "CONTAINER_ID=$CONTAINER_ID" >> $GITHUB_ENV
-      - name: 提取打包产物
+          docker login ${{ prd.MY_HOST }}:5000 -u ${{ prd.MY_USER }} -p ${{ prd.MY_PWD }}
+      - name: 给镜像打标签
         run: |
-          mkdir -p ./extracted-artifacts
-          docker cp $CONTAINER_ID:/app/dist/. ./extracted-artifacts/
-      - name: 移动产物到指定目录
+          docker tag my-web-app ${{ prd.MY_HOST }}:5000/my-web-app:latest
+      - name: 上传到私人仓库
         run: |
-          mkdir -p ./target-directory
-          mv ./extracted-artifacts/* ./target-directory/
+          docker push ${{ prd.MY_HOST }}:5000/my-web-app:latest
       - name: 查看
         run: |
           tree .
