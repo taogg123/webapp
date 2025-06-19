@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: prd
     steps:
       - name: 检出代码
         uses: actions/checkout@v3
@@ -21,13 +22,13 @@ jobs:
             -t my-web-app .
       - name: 登陆到私人仓库
         run: |
-          docker login ${{ prd.MY_HOST }}:5000 -u ${{ prd.MY_USER }} -p ${{ prd.MY_PWD }}
+          docker login ${{ secrets.MY_HOST }}:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
       - name: 给镜像打标签
         run: |
-          docker tag my-web-app ${{ prd.MY_HOST }}:5000/my-web-app:latest
+          docker tag my-web-app ${{ secrets.MY_HOST }}:5000/my-web-app:latest
       - name: 上传到私人仓库
         run: |
-          docker push ${{ prd.MY_HOST }}:5000/my-web-app:latest
+          docker push ${{ secrets.MY_HOST }}:5000/my-web-app:latest
       - name: 查看
         run: |
           tree .
