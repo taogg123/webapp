@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: login
         run: |
+          # 安装 sshpass（用于非交互密码登录）
+          sudo apt-get update && sudo apt-get install -y sshpass
           sshpass -p "${{ secrets.MY_SSH_PAS }}" ssh -o StrictHostKeyChecking=no \
           -p ${{ secrets.MY_SSH_PORT }} ${{ secrets.SSH_HOST }} << 'EOF'
 
