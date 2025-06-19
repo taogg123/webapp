@@ -22,7 +22,7 @@ jobs:
       - name: 构建临时容器
         id: create_container
         run: |
-          CONTAINER_ID=$(docker create my-app-builder)
+          CONTAINER_ID=$(docker create my-web-app)
           echo "CONTAINER_ID=$CONTAINER_ID" >> $GITHUB_ENV
       - name: 提取打包产物
         run: |
