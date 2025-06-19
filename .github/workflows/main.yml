@@ -14,7 +14,7 @@ jobs:
           # 创建 Docker 配置目录
           mkdir -p /etc/docker
           # 配置不安全的私有注册表
-          echo '{"insecure-registries":["47.115.133.215"]}' | sudo tee /etc/docker/daemon.json
+          echo '{"insecure-registries":["47.115.133.215:5000"]}' | sudo tee /etc/docker/daemon.json
           # 重启 Docker 服务
           sudo systemctl restart docker
       - name: Verify Docker configuration
