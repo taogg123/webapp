@@ -1,0 +1,3 @@
+services:
+  my-web-app:
+    image: my-web-app:latest
