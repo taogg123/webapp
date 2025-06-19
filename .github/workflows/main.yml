@@ -43,7 +43,7 @@ jobs:
         run:  |
           docker buildx build \
             --platform linux/amd64 \
-            --tag http://47.115.133.215:5000/my-web-app:latest \
+            --tag 47.115.133.215:5000/my-web-app:latest \
             --push \
             .
       - name: 查看
