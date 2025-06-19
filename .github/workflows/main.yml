@@ -11,10 +11,6 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v3
-      - name: 配置buildx
-        uses: docker/setup-buildx-action@v2
-        with: 
-          install: true
       - name: 配置 buildx 并启用 insecure registry
         uses: docker/setup-buildx-action@v2
         with:
@@ -30,6 +26,10 @@ jobs:
           cat /etc/docker/daemon.json
           sudo systemctl restart docker
           docker info | grep -A2 'Insecure Registries'  # 验证配置
+      - name: 验证 Buildx 配置
+        run: |
+          docker buildx inspect
+          docker buildx version
       - name: 登陆到私人仓库
         run: |
           docker login 47.115.133.215:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
@@ -43,7 +43,7 @@ jobs:
         run:  |
           docker buildx build \
             --platform linux/amd64 \
-            --tag 47.115.133.215:5000/my-web-app:latest \
+            --tag http://47.115.133.215:5000/my-web-app:latest \
             --push \
             .
       - name: 查看
