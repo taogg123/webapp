@@ -26,6 +26,8 @@ jobs:
       - name: 配置 insecure registry
         run: |
           echo '{"insecure-registries":["${{ secrets.MY_HOST }}:5000"]}' | sudo tee /etc/docker/daemon.json
+          # 验证配置文件内容
+          cat /etc/docker/daemon.json
           sudo systemctl restart docker
           docker info | grep -A2 'Insecure Registries'  # 验证配置
       - name: 登陆到私人仓库
