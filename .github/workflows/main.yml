@@ -25,14 +25,14 @@ jobs:
             env.BUILDKIT_STEP_LOG_MAX_SPEED=1048576
       - name: 配置 insecure registry
         run: |
-          echo '{"insecure-registries":["${{ secrets.MY_HOST }}:5000"]}' | sudo tee /etc/docker/daemon.json
+          echo '{"insecure-registries":["47.115.133.215:5000"]}' | sudo tee /etc/docker/daemon.json
           # 验证配置文件内容
           cat /etc/docker/daemon.json
           sudo systemctl restart docker
           docker info | grep -A2 'Insecure Registries'  # 验证配置
       - name: 登陆到私人仓库
         run: |
-          docker login ${{ secrets.MY_HOST }}:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
+          docker login 47.115.133.215:5000 -u ${{ secrets.MY_USER }} -p ${{ secrets.MY_PWD }}
       - name: Verify Docker configuration
         run: |
           # 检查 Docker 信息
@@ -43,7 +43,7 @@ jobs:
         run:  |
           docker buildx build \
             --platform linux/amd64 \
-            --tag ${{ secrets.MY_HOST }}:5000/my-web-app:latest \
+            --tag 47.115.133.215:5000/my-web-app:latest \
             --push \
             .
       - name: 查看
