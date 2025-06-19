@@ -37,7 +37,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64,linux/arm/v7 \
             --tag ${{ secrets.MY_HOST }}:5000/my-web-app:latest \
-            --push \ #推送仓库
+            --push \
             .
       - name: 查看
         run: |
