@@ -24,7 +24,7 @@ jobs:
           # 检查是否为 Git 仓库
           if [ ! -d .git ]; then
             # 首次部署：克隆仓库
-            git clone https://github.com/your-username/your-repo.git .
+            git clone https://github.com/taogg123/webapp.git .
           else
             # 已有仓库：拉取更新
             git pull origin main
