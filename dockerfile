@@ -8,7 +8,7 @@ RUN rm -rf /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/
 
 # 将 HTML 文件复制到 Nginx 默认的网站根目录
-COPY *.html /usr/share/nginx/html
+COPY src/ /usr/share/nginx/html/
 
 # 暴露 80 端口
 EXPOSE 8848
